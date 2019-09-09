@@ -1,0 +1,1703 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Patient detail</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/newpatient.css}" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+        table.table
+        {
+            margin-top: 10px;
+        }
+        table.table > thead > tr > th{
+            background: #286090;
+            color:#ffffff;
+        }
+        .search label {
+            color:#286090;
+        }
+    </style>
+</head>
+<body>
+
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Patient Medical History</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/">Enter Patient Data</a></li>
+            <li class="active"><a th:href="@{view}">View Patient Data</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class='container-fluid search'>
+    <div class='row'>
+        <div class='col-sm-2'>
+            <form action="#" th:action="@{/findbyssn1}" th:object="${webFormData}" method="post">
+                <label >SSN:</label>
+                <input type="form-control" name="ssn" th:field="*{ssn}"required>
+                <input class='btn btn-xs btn-primary' type="submit" value="Find" />
+
+            </form>
+        </div>
+        <div class='col-sm-2'>
+            <form action="#" th:action="@{/findbyfirstname}" th:object="${webFormData}" method="post">
+                <label >First Name:</label>
+                <input type="form-control" name="firstName" th:field="*{firstName}"required>
+                <input class='btn btn-xs btn-primary' type="submit" value="Find" />
+            </form>
+        </div>
+        <div class='col-sm-2'>
+            <form action="#" th:action="@{/findbylastname}" th:object="${webFormData}" method="post">
+                <label>Last Name:</label>
+                <input type="form-control" name="lastName" th:field="*{lastName}" required>
+                <input class='btn btn-xs btn-primary' type="submit" value="Find" />
+            </form>
+        </div>
+        <div class='col-sm-2'>
+            <form action="#" th:action="@{/findbydateofbirth}" th:object="${webFormData}" method="post">
+                <label>Date of Birth</label>
+                <input type="date" name="dataOfBirth" th:field="*{dataOfBirth}" placeholder="yyyy-mm-dd" required>
+                <input class='btn btn-xs btn-primary' type="submit" value="Find" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- forms -->
+<!-- <div class="container-fluid"> -->
+<form action="#" th:action="@{/submitresult}" th:object="${webFormData}" method="post">
+
+    <!-- Page1 -->
+    <div class="title">
+        <h2>-Patient Information Sheet-</h2>
+        <label>Date:<input type="date" class='input-date' th:field="*{date}"/></label>
+    </div>
+    <div class="round container-fluid">
+
+        <div class='flex-row'>
+            <label>PATIENT:(Mr.,Mrs.,Ms)First Name:</label>
+            <input type="text" th:field="*{firstName}" required>
+            <label>Middle Initial:</label>
+            <input type="text" th:field="*{middleName}">
+            <label>Last Name:</label>
+            <input type="text" th:field="*{lastName}" required>
+        </div>
+
+        <div class='flex-row'>
+            <!-- sex -->
+            <label >Sex:</label>
+            <input id='male' type="radio" name="sex1" th:field="*{sex}" value = "male" >
+            <label for='male'>Male</label>
+            <input id='female' type="radio" name="sex1" th:field="*{sex}" value = "female" >
+            <label for='female'>Female</label>
+            <!-- DOB -->
+            <label>Date of Birth:</label>
+            <input type="date" name="dataOfBirth1" th:field="*{dataOfBirth}">
+            <!-- age -->
+            <label>Age:</label>
+            <input type="text" name="age1" th:field="*{age}">
+            <!-- ssn -->
+            <label>Social Security No:</label>
+            <input type="text" name="ssn" th:field="*{ssn}"required>
+        </div>
+        <div class='flex-row'>
+            <label>Billing Address:</label>
+            <input type="text" name="billing1" th:field="*{billingAddress}">
+        </div>
+        <div class='flex-row'>
+            <label>City:</label>
+            <input type="text" name="city1" th:field="*{city}">
+            <label>State:</label>
+            <input type="text" name="state1" th:field="*{state}">
+            <label>Zip:</label>
+            <input type="text" name="zip1" th:field="*{zip}">
+        </div>
+        <div class='flex-row'>
+            <label>Home Tel.:</label>
+            <input type="text" name="homeTel1" th:field="*{homeTel}" >
+            <label>Bus. Tel.:</label>
+            <input type="text" name="busTel1" th:field="*{busTel}">
+        </div>
+        <div class='flex-row'>
+            <label>Cell #.:</label>
+            <input type="text" name="cell1" th:field="*{cell}">
+            <label>Emergency Contact #:</label>
+            <input type="text" name="emergencyContact1" th:field="*{emergencyContact}">
+        </div>
+        <div class='flex-row'>
+            <label>Physician:</label>
+            <input type="text" name="physician1" th:field="*{physician}">
+            <label>Dentist:</label>
+            <input type="text" name="dentist1" th:field="*{dentist}">
+        </div>
+        <div class='flex-row'>
+            <label>Referred By:</label>
+            <input type="text" name="refer1" th:field="*{referBy}">
+        </div>
+    </div>
+
+    <div class="round container-fluid">
+        <div class="flex-row">
+            <!--  -->
+            <label>Student:</label>
+            <input type="radio" name="student1" th:field="*{student}" value = "fulltime" >
+            <label >Full Time</label>
+            <input type="radio" name="student1" th:field="*{student}" value = "parttime">
+            <label>Part Time</label>
+            <!--  -->
+            <label>School Name:</label>
+            <input type="text" name="school1" th:field="*{school}">
+        </div>
+        <div class="flex-row">
+            <label>Marital Status:</label>
+            <label>Married</label>
+            <input type="radio" name="marriage1" th:field="*{marriage}" value = "married" >
+            <label >Divorced</label>
+            <input type="radio" name="marriage1" th:field="*{marriage}" value = "divorced" >
+            <label >Legally Separated</label>
+            <input type="radio" name="marriage1" th:field="*{marriage}" value = "legally separated" >
+            <label>Widow</label>
+            <input type="radio" name="marriage1" th:field="*{marriage}" value = "widow" >
+            <label>Single</label>
+            <input type="radio" name="marriage1" th:field="*{marriage}" value = "single" >
+        </div>
+        <div class="flex-row">
+            <label>Employed:</label>
+            <label>Full Time</label>
+            <input type="radio" name="employment1" th:field="*{employment}" value = "fulltime">
+            <label>Part Time</label>
+            <input type="radio" name="employment1" th:field="*{employment}" value = "parttime">
+            <label>Retired</label>
+            <input type="radio" name="employment1" th:field="*{employment}" value = "retired">
+            <label>Unemployed</label>
+            <input type="radio" name="employment1" th:field="*{employment}" value = "unemployed">
+        </div>
+    </div>
+    </div>
+    <div class = "round container-fluid">
+        <div class='flex-row'>
+            <label>Person responsible for your account?</label>
+            <label>Relation:</label>
+            <input type="radio" name="relation1" th:field="*{personrelated}" value = "self" >
+            <label>Self</label>
+            <input type="radio" name="relation1" th:field="*{personrelated}" value = "spouse" >
+            <label>Spouse</label>
+            <input type="radio" name="relation1" th:field="*{personrelated}" value = "mother" >
+            <label>Mother</label>
+            <input type="radio" name="relation1" th:field="*{personrelated}" value = "father" >
+            <label>Father</label>
+            <input type="radio" name="relation1" th:field="*{personrelated}" value = "other" >
+            <label>Other</label>
+        </div>
+        <div class='flex-row'>
+            <label>Name:</label>
+            <input type="text" name="relationName1" th:field="*{relatedPersonName}">
+            <label>Date of Birth:</label>
+            <input type="date" name="relationBirthday1" th:field="*{relatedPersonBirthday}">
+        </div>
+        <div class='flex-row'>
+            <label>Soc.Sec.#:</label>
+            <input type="text" name="relationSocial1" th:field="*{relatedPersonSSN}">
+            <label>Home Tel.:</label>
+            <input type="text" name="relationHomeTel1" th:field="*{relatedPersonHomeTel}">
+            <label>Cell Phone:</label>
+            <input type="text" name="relationCell1" th:field="*{relatedPersonCell}">
+        </div>
+        <div class='flex-row'>
+            <label>Street:</label>
+            <input type="text" name="relationStreet1" th:field="*{relatedPersonStreet}">
+            <label>City:</label>
+            <input type="text" name="relationCity1" th:field="*{relatedPersonCity}" >
+            <label>State:</label>
+            <input type="text" name="relationState1" th:field="*{relatedPersonState}" >
+            <label>Zip:</label>
+            <input type="text" name="relationZip1" th:field="*{relatedPersonZip}">
+        </div>
+        <div class='flex-row'>
+            <label>Employer:</label>
+            <input type="text" name="relationEmployer1" th:field="*{relatedPersonEmployer}">
+            <label>Tel.:</label>
+            <input type="text" name="relationTel1" th:field="*{relatedPersonEmployerTel}">
+        </div>
+        <div class='flex-row'>
+            <label>Please specify the reason for today's visit:</label>
+            <input type="text" name="reason1" th:field="*{reasonForVisit}">
+        </div>
+    </div>
+    </div>
+
+    <div class="round container-fluid">
+        <div class='grey-header'>
+            <label>EMPLOYER INFORMATION:</label>
+        </div>
+        <div class="flex-row">
+            <label>Name:</label>
+            <input type="text" name="employerName1" th:field="*{employerName}">
+            <label>Tel.#</label>
+            <input type="text" name="employerTel1" th:field="*{employerTel}">
+        </div>
+        <div class="flex-row">
+            <label>Street:</label>
+            <input type="text" name="employerStreet1" th:field="*{employerStreet}" >
+            <label>City:</label>
+            <input type="text" name="employerCity1" th:field="*{employerCity}">
+            <label>State:</label>
+            <input type="text" name="employerState1" th:field="*{employerState}">
+            <label>Zip:</label>
+            <input type="text" name="employerZip1" th:field="*{employerZip}">
+        </div>
+    </div>
+
+    <div class="round container-fluid">
+        <div class='grey-header'>
+            <label>FEES AND PAYMENTS:</label>
+        </div>
+        <p></p>
+        <p>
+            We make every effort to keep the cost f your oral surgical care as low as possible. You can help by paying
+            upon completion of each visit. Other arrangements can be made with our office manager depending upon special
+            circumstances. An estimate of the charge for any procedure or surgery you may require will be given to you
+            upon request. If you have any dental and/or medical insurance we will be glad to fill out the proper forms
+            but please complete the identifying information on this form.
+        </p>
+        <p>
+            Please remember that insurance is considered a method of reimbursing the patient for fees paid to the doctor
+            and is not a substitute for payment. Some companies pay fixed allowances for certain procedures and others
+            pay a percentage of the charge. It is your responsibility to pay any deductible amount, co-insurance or any
+            other balance not paid for by your insurance company. Interest charges of 1.5% per month (18% Annually) will
+            be applied to accounts over 60 days old.
+        </p>
+        <p>
+            I understand that if my account is sent to a collection agency, may account will be charged with a 40%
+            collection fee. I understand that should legal action be taken in an effort to collect on said account, I
+            will be completely responsible for all legal costs, including filing fees, count costs and attorneys fees.
+        </p>
+        <p>
+            This signature on file is also my authorization for the release of information necessary to process my claim.
+            I hereby authorize payment directly to the surgeon named of the benefits otherwise payable to me.
+        </p>
+        <div class='flex-row' style='flex-direction: row-reverse;'>
+
+            <input type="date" name="signedName1" th:field="*{signeDate}" >
+            <label>Date:</label>
+        </div>
+        <div class='flex-row'>
+            <label>STOP! DETACH TOP SHEET ONLY AND BRING TO <br> FRONT DESK BEFORE PROCEEDING</label>
+            <label>Signature:</label>
+            <input type="text" name="signature1" th:field="*{signature}">
+        </div>
+    </div>
+    <!-- Page2 -->
+    <div class="title">
+        <h2>- HEALTH HISTORY -   </h2>
+    </div>
+    <div class="round container-fluid" style='border: none;'>
+        <p>To our patients:</p>
+        <p>
+            Oral and maxillofacial surgeons primarily treat diseases, injuries or deformities of the face and the mouth.However, health problems that you may have or medication that your are taking have an important interrelationship with the care that you will be receiving. Thank you for answering the following questions. Your answers are for our records only and will be kept strictly confidential.
+        </p>
+        <div class='flex-row' style='margin: 0 150px;'>
+            <label>Reason for today's office visit</label>
+            <input type="text" name="reason2" th:field="*{reasonForVisit2}" >
+        </div>
+    </div>
+
+    <div class="round container-fluid center">
+        <!-- header -->
+        <div class="row">
+            <div class='col-sm-1 col-sm-offset-10'><label>YES</label></div>
+            <div class='col-sm-1'><label>NO</label></div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>1.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label>Are you in good health?</label>
+                <div class='dotted-line'><div></div></div><label>Height:</label>
+                <input type="text" name="height2"  th:field="*{height}" style="width:150px;">
+                <label>Weight:</label>
+                <input type="text" name="weight2" th:field="*{weight}" style="width:150px;" >
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="inHealth2" th:field="*{inHealthYN}" value = 'yes' >
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="inHealth2" th:field="*{inHealthYN}" value = 'no' >
+            </div>
+        </div>
+        <!-- Q2 -->
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>2.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label>Have there been any changes in your general health int the past year?</label>
+                <div class='dotted-line'><div></div></div>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="changeInHealth2" th:field="*{changeInHealthYN}" value='yes'>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="changeInHealth2" th:field="*{changeInHealthYN}" value='no'>
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>3.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label>Are your under the are of a physician?</label>
+                <div class='dotted-line'><div></div></div>
+                <label>Date of last visit:</label>
+                <input type='date' >
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="underPhysician2" th:field="*{underPhysicianYN}" value='yes'>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="underPhysician2" th:field="*{underPhysicianYN}" value='no'>
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-9 col-sm-offset-1 flex-col'>
+                <label>If so, for what are you being treated?</label>
+                <input type="text" name="treat2" th:field="*{treat}" style='flex: 1;'>
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>4.</label>
+            </div>
+            <div class='col-sm-9'>
+                <label>Have you ever had any serious illness, operation or been hospitalized?
+                    (Describe on back page)</label>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="illness2"  th:field="*{illnessYN}" value = 'yes' >
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="illness2"  th:field="*{illnessYN}" value = 'no' >
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-sm-1'>
+                <label>5.</label>
+            </div>
+
+            <div class='col-sm-9'>
+                <label>Do you have unhealed injuries or inflamed areas in or around your mouth, growth or sore spots in your
+                    mouth?</label>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="injury2" th:field="*{injuryYN}" value = 'yes' >
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="injury2" th:field="*{injuryYN}" value = 'no' >
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-sm-9 col-sm-offset-1 flex-col'>
+                <label></label>
+                <div class='dotted-line'><div></div></div>
+                <label>If so, describe where</label>
+                <input type="text" name="injuries" th:field="*{injuryWhere}" style='flex: 6;'>
+            </div>
+        </div>
+    </div>
+
+
+    <table class='round-table' id="table">
+        <thead>
+        <tr>
+            <th scope="col">  </th>
+            <th scope="col">HAVE YOU HAD OR DO YOU <br/>CURRENTLY HAVE...</th>
+            <th scope="col">Yes</th>
+            <th scope="col">No</th>
+            <th scope="col">Notes</th>
+            <th scope="col">   </th>
+            <th scope="col">HAVE YOU HAD OR DO YOU <br/>CURRENTLY HAVE...</th>
+            <th scope="col">Yes</th>
+            <th scope="col">No</th>
+            <th scope="col">Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>6</th>
+            <td>Rheumatic fever?</td>
+            <td>
+                <input type="radio" name="6" th:field="*{p2n6YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="6" th:field="*{p2n6YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note6" th:field="*{p2n6Note}" >
+            </td>
+            <th>35</th>
+            <td>Other contagious diseases?</td>
+            <td>
+                <input type="radio" name="35" th:field="*{p2n35YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="35" th:field="*{p2n35YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note35" th:field="*{p2n35Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>7</th>
+            <td>Prosthetic (artificial) joints?</td>
+            <td>
+                <input type="radio" name="7" th:field="*{p2n7YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="7" th:field="*{p2n7YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note7" th:field="*{p2n7Note}">
+            </td>
+            <th>36</th>
+            <td>Hepatitis, Jaundice or liver disease?</td>
+            <td>
+                <input type="radio" name="36" th:field="*{p2n36YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="36" th:field="*{p2n36YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note36" th:field="*{p2n36Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>8</th>
+            <td>Damaged heart valves/mitral valve prolapse?</td>
+            <td>
+                <input type="radio" name="8" th:field="*{p2n8YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="8" th:field="*{p2n8YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note8" th:field="*{p2n8Note}">
+            </td>
+            <th>37</th>
+            <td>Is your immune system decreased for any reason, including HIV, AIDS or Organ Transplant</td>
+            <td>
+                <input type="radio" name="37" th:field="*{p2n37YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="37" th:field="*{p2n37YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note37" th:field="*{p2n37Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>9</th>
+            <td>Prosthetic (artificial) heart valves?</td>
+            <td>
+                <input type="radio" name="9" th:field="*{p2n9YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="9" th:field="*{p2n9YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note9" th:field="*{p2n9Note}">
+            </td>
+            <th>38</th>
+            <td>Delay in healing?</td>
+            <td>
+                <input type="radio" name="38" th:field="*{p2n38YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="38" th:field="*{p2n6YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note38" th:field="*{p2n38Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>10</th>
+            <td>Heart disease or defects?</td>
+            <td>
+                <input type="radio" name="10" th:field="*{p2n10YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="10" th:field="*{p2n10YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note10" th:field="*{p2n10Note}">
+            </td>
+            <th>39</th>
+            <td>A tumor or growth?</td>
+            <td>
+                <input type="radio" name="39" th:field="*{p2n39YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="39" th:field="*{p2n39YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note39" th:field="*{p2n39Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>11</th>
+            <td>Heart disease or defects?</td>
+            <td>
+                <input type="radio" name="11" th:field="*{p2n11YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="radio" name="11" th:field="*{p2n11YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note11" th:field="*{p2n11Note}">
+            </td>
+            <th>40</th>
+            <td>Epilepsy, convulsions?</td>
+            <td>
+                <input type="radio" name="40" th:field="*{p2n40YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="40" th:field="*{p2n40YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note40" th:field="*{p2n40Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>12</th>
+            <td>Chest pain, angina</td>
+            <td>
+                <input type="radio" name="12" th:field="*{p2n12YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="12" th:field="*{p2n12YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note12" th:field="*{p2n12Note}">
+            </td>
+            <th>41</th>
+            <td>Thyroid trouble?</td>
+            <td>
+                <input type="radio" name="41" th:field="*{p2n41YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="41" th:field="*{p2n41YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note41" th:field="*{p2n41Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>13</th>
+            <td>Heart attack(s)?</td>
+            <td>
+                <input type="radio" name="13" th:field="*{p2n13YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="13" th:field="*{p2n13YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note13" th:field="*{p2n13Note}">
+            </td>
+            <th>42</th>
+            <td>Diabetes?</td>
+            <td>
+                <input type="radio" name="42" th:field="*{p2n42YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="42" th:field="*{p2n42YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note42" th:field="*{p2n42Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>14</th>
+            <td>Irregular heart beat?</td>
+            <td>
+                <input type="radio" name="14" th:field="*{p2n14YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="14" th:field="*{p2n14YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note14" th:field="*{p2n14Note}">
+            </td>
+            <th>43</th>
+            <td>Low blood sugar?</td>
+            <td>
+                <input type="radio" name="43" th:field="*{p2n43YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="43" th:field="*{p2n43YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note43" th:field="*{p2n43Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>15</th>
+            <td>Heart surgery</td>
+            <td>
+                <input type="radio" name="15" th:field="*{p2n15YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="15" th:field="*{p2n15YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note15" th:field="*{p2n15Note}">
+            </td>
+            <th>44</th>
+            <td>Gallbladder trouble?</td>
+            <td>
+                <input type="radio" name="44" th:field="*{p2n44YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="44" th:field="*{p2n44YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note44" th:field="*{p2n44Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>16</th>
+            <td>Cardiac pacemaker?</td>
+            <td>
+                <input type="radio" name="16" th:field="*{p2n16YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="16" th:field="*{p2n16YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note16" th:field="*{p2n16Note}">
+            </td>
+            <th>45</th>
+            <td>Kidney trouble?</td>
+            <td>
+                <input type="radio" name="45" th:field="*{p2n45YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="45" th:field="*{p2n45YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note45" th:field="*{p2n45Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>17</th>
+            <td>Stroke?</td>
+            <td>
+                <input type="radio" name="17" th:field="*{p2n17YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="17" th:field="*{p2n17YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note17" th:field="*{p2n17Note}">
+            </td>
+            <th>46</th>
+            <td>Are you on dialysis?</td>
+            <td>
+                <input type="radio" name="46" th:field="*{p2n46YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="46" th:field="*{p2n46YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note46" th:field="*{p2n46Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>18</th>
+            <td>High blood pressure?</td>
+            <td>
+                <input type="radio" name="18" th:field="*{p2n18YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="18" th:field="*{p2n18YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note18" th:field="*{p2n18Note}">
+            </td>
+            <th>47</th>
+            <td>Fainting spells?</td>
+            <td>
+                <input type="radio" name="47" th:field="*{p2n47YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="47" th:field="*{p2n47YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note47" th:field="*{p2n47Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>19</th>
+            <td>Low blood pressure?</td>
+            <td>
+                <input type="radio" name="19" th:field="*{p2n19YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="19" th:field="*{p2n19YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note19" th:field="*{p2n19Note}">
+            </td>
+            <th>48</th>
+            <td>Swollen ankles, arthritis or joint disease?</td>
+            <td>
+                <input type="radio" name="16" th:field="*{p2n16YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="16" th:field="*{p2n16YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note16" th:field="*{p2n16Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>20</th>
+            <td>Asthma?</td>
+            <td>
+                <input type="radio" name="20" th:field="*{p2n20YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="20" th:field="*{p2n20YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note20" th:field="*{p2n20Note}">
+            </td>
+            <th>49</th>
+            <td>Stomach ulcers?</td>
+            <td>
+                <input type="radio" name="49" th:field="*{p2n49YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="49" th:field="*{p2n49YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note49" th:field="*{p2n49Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>21</th>
+            <td>Emphysema?</td>
+            <td>
+                <input type="radio" name="21" th:field="*{p2n21YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="21" th:field="*{p2n21YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note21" th:field="*{p2n21Note}">
+            </td>
+            <th>50</th>
+            <td>Radiation or chemotherapy for cancer?</td>
+            <td>
+                <input type="radio" name="50" th:field="*{p2n50YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="50" th:field="*{p2n50YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note50" th:field="*{p2n50Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>22</th>
+            <td>Tuberculosis?</td>
+            <td>
+                <input type="radio" name="22" th:field="*{p2n22YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="22" th:field="*{p2n22YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note22" th:field="*{p2n22Note}">
+            </td>
+            <th>51</th>
+            <td>Chronic fatigue / night sweats?</td>
+            <td>
+                <input type="radio" name="51" th:field="*{p2n51YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="51" th:field="*{p2n51YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note51" th:field="*{p2n51Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>23</th>
+            <td>Bronchitis, chronic cough?</td>
+            <td>
+                <input type="radio" name="23" th:field="*{p2n23YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="23" th:field="*{p2n23YN}" value = 'no' >
+
+            </td>
+            <td>
+                <input type="text" name="note23" th:field="*{p2n23Note}">
+            </td>
+            <th>52</th>
+            <td>Do you have difficulty sleeping</td>
+            <td>
+                <input type="radio" name="52" th:field="*{p2n52YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="52" th:field="*{p2n52YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note52" th:field="*{p2n52Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>24</th>
+            <td>Hayfever / Sinus problems?</td>
+            <td>
+                <input type="radio" name="24" th:field="*{p2n24YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="24" th:field="*{p2n24YN}" value = 'no' >
+
+            </td>
+            <td>
+                <input type="text" name="note24" th:field="*{p2n24Note}">
+            </td>
+            <th>53</th>
+            <td>Are you on a diet?</td>
+            <td>
+                <input type="radio" name="53" th:field="*{p2n53YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="53" th:field="*{p2n53YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note53" th:field="*{p2n53Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>25</th>
+            <td>Do you smoke or use smokeless tobacco?</td>
+            <td>
+                <input type="radio" name="25" th:field="*{p2n25YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="25" th:field="*{p2n25YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note25" th:field="*{p2n25Note}">
+            </td>
+            <th>54</th>
+            <td>Eye disease / glaucoma?</td>
+            <td>
+                <input type="radio" name="54" th:field="*{p2n54YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="54" th:field="*{p2n54YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note54" th:field="*{p2n54Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>26</th>
+            <td>Do you drink Alcohol?</td>
+            <td>
+                <input type="radio" name="26" th:field="*{p2n26YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="26" th:field="*{p2n26YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note26" th:field="*{p2n26Note}">
+            </td>
+            <th>55</th>
+            <td>Contact lenses?</td>
+            <td>
+                <input type="radio" name="55" th:field="*{p2n55YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="55" th:field="*{p2n55YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note55" th:field="*{p2n55Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>27</th>
+            <td>A history of alcohol abuse?</td>
+            <td>
+                <input type="radio" name="27" th:field="*{p2n27YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="27" th:field="*{p2n27YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note27" th:field="*{p2n27Note}">
+            </td>
+            <th>56</th>
+            <td>Mental health problems?</td>
+            <td>
+                <input type="radio" name="56" th:field="*{p2n56YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="56" th:field="*{p2n56YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note56" th:field="*{p2n56Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>28</th>
+            <td>A history of drug abuse or current use?</td>
+            <td>
+                <input type="radio" name="28" th:field="*{p2n28YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="28" th:field="*{p2n28YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note28" th:field="*{p2n28Note}">
+            </td>
+            <th>57</th>
+            <td>Pain & Clicking of jaws when eating?</td>
+            <td>
+                <input type="radio" name="57" th:field="*{p2n57YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="57" th:field="*{p2n57YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note57" th:field="*{p2n57Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>29</th>
+            <td>Blood transfusion?</td>
+            <td>
+                <input type="radio" name="29" th:field="*{p2n29YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="29" th:field="*{p2n29YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note29" th:field="*{p2n29Note}">
+            </td>
+            <th>58</th>
+            <td>A removable dental appliance?</td>
+            <td>
+                <input type="radio" name="58" th:field="*{p2n58YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="58" th:field="*{p2n6YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note58" th:field="*{p2n58Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>30</th>
+            <td>Blood disorder sucg as anemia?</td>
+            <td>
+                <input type="radio" name="30" th:field="*{p2n30YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="30" th:field="*{p2n30YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note30" th:field="*{p2n30Note}">
+            </td>
+            <th>59</th>
+            <td>Have you or a family member ever had any problems with general anesthesia?</td>
+            <td>
+                <input type="radio" name="59" th:field="*{p2n59YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="59" th:field="*{p2n59YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note59" th:field="*{p2n59Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>31</th>
+            <td>Bleeding tendency (abnormal bleed)?</td>
+            <td>
+                <input type="radio" name="31" th:field="*{p2n31YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="31" th:field="*{p2n31YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note31" th:field="*{p2n31Note}">
+            </td>
+            <th>60</th>
+            <td>Malignant Hyperthemia?</td>
+            <td>
+                <input type="radio" name="60" th:field="*{p2n60YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="60" th:field="*{p2n60YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note60" th:field="*{p2n60Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>32</th>
+            <td>Bruise easily?</td>
+            <td>
+                <input type="radio" name="32" th:field="*{p2n32YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="32" th:field="*{p2n32YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note32" th:field="*{p2n32Note}">
+            </td>
+            <th rowspan="3">61</th>
+            <td rowspan="3">List any prior surgeries or hospitalizations on back page</td>
+            <td rowspan="3">
+                <input type="radio" name="61" th:field="*{p2n61YN}" value = 'yes'>
+
+            </td>
+            <td rowspan="3">
+                <input type="radio" name="61" th:field="*{p2n61YN}" value = 'no'>
+
+            </td>
+            <td rowspan="3" style="border-radius: 0 0 5px 0;">
+                <input type="text" name="note61" th:field="*{p2n61Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>33</th>
+            <td>Infectious mononucleosis?</td>
+            <td>
+                <input type="radio" name="33" th:field="*{p2n33YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="33" th:field="*{p2n33YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note33" th:field="*{p2n33Note}">
+            </td>
+        </tr>
+        <tr>
+            <th>34</th>
+            <td>Sexually transmitted diseases?</td>
+            <td>
+                <input type="radio" name="34" th:field="*{p2n34YN}" value = 'yes'>
+
+            </td>
+            <td>
+                <input type="radio" name="34" th:field="*{p2n34YN}" value = 'no'>
+
+            </td>
+            <td>
+                <input type="text" name="note34" th:field="*{p2n34Note}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <!-- Page3 -->
+    <div class="round container-fluid center">
+        <div class="row header">
+            <div class='col-sm-10'><label>MEDICATIONS</label></div>
+            <div class='col-sm-1'><label>YES</label></div>
+            <div class='col-sm-1'><label>NO</label></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1"><label>1.</label></div>
+            <div class="col-sm-9">
+                <label>ARE YOU NOW TAKING ANY KIND OF MEDICINE, DRUG OR PILLS FOR ANY PURPOSE
+                    INCLUDING OVER THEN COUNTER MEDICATIONS? IF SO, PLEASE LIST ALL MEDICATIONS BELOW</label>
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="medicine3" th:field="*{medicineYN}" value = "yes">
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="medicine3" th:field="*{medicineYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1">
+                <label>2.</label>
+            </div>
+            <div class="col-sm-9 flex-col">
+                <label>Anticoagulants?</label><div class='dotted-line'><div></div></div>
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="anticoagulants3" th:field="*{anticoagulantsYN}" value = "yes">
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="anticoagulants3" th:field="*{anticoagulantsYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1">
+                <label>3.</label>
+            </div>
+            <div class="col-sm-9 flex-col">
+                <label>Tranquilizers?</label><div class='dotted-line'><div></div></div>
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="tranquilizers3" th:field="*{tranquilizersYN}" value = "yes">
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="tranquilizers3" th:field="*{tranquilizersYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1">
+                <label>4.</label>
+            </div>
+            <div class="col-sm-9 flex-col">
+                <label>Cortisone?</label><div class='dotted-line'><div></div></div>
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="cortisone3" th:field="*{cortisoneYN}" value = "yes">
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="cortisone3" th:field="*{cortisoneYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-9 col-sm-offset-1 flex-col'>
+                <label>List Medications here:</label>
+                <input type="text" name="medication3" th:field="*{medicationP3}" style="flex:1;">
+            </div>
+        </div>
+    </div>
+
+    <div class="round container-fluid center">
+        <div class="row header">
+            <div class="col-sm-10">
+                <label>ALLERGIES</label>
+            </div>
+            <div class="col-sm-1">
+                <label>YES</label>
+            </div>
+            <div class="col-sm-1">
+                <label>NO</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1">
+                <label>1.</label>
+            </div>
+            <div class="col-sm-9">
+                <label>ARE YOU ALLERGIC TO ANY MEDICATIONS? PLEASE LIST BELOW</label>
+            </div>
+            <div class="col-sm-1">
+
+                <input type="radio" name="allergyMedication3" th:field="*{allergyMedicationYN}" value = "yes">
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="allergyMedication3" th:field="*{allergyMedicationYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>2.</label>
+            </div>
+            <div class='col-sm-9'>
+                <label>ARE YOU ALLERGIC TO OR HAD A REACTION TO LOCAL ANESTHETICS? (NOVOCAINE)</label>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="allergyAnesthetics3" th:field="*{allergyAnestheticsYN}" value = "yes">
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="allergyAnesthetics3" th:field="*{allergyAnestheticsYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>3.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label>Penicillin?</label><div class='dotted-line'><div></div></div>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="penicillin3" th:field="*{penicillinYN}" value = "yes">
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="penicillin3" th:field="*{penicillinYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>4.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label>Sulfa Drugs?</label><div class='dotted-line'><div></div></div>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="sulfa3" th:field="*{sulfaYN}" value = "yes">
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="sulfa3" th:field="*{sulfaYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>5.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label>Other antibiotics?</label><div class='dotted-line'><div></div></div>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="antibiotics3" th:field="*{antibioticsYN}" value = "yes">
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="antibiotics3" th:field="*{antibioticsYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>6.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label>Sodium pentothal, Valium, or other tranquilizers?</label>
+                <div class='dotted-line'><div></div></div>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="sodium3" th:field="*{sodiumYN}" value = "yes">
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="sodium3" th:field="*{sodiumYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>7.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label>Aspirin?</label><div class='dotted-line'><div></div></div>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="aspirin3" th:field="*{aspirinYN}" value = "yes">
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="aspirin3" th:field="*{aspirinYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>8.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label>Codeine or other narcotics?</label><div class='dotted-line'><div></div></div>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="codeine3" th:field="*{codeineYN}" value = "yes">
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="codeine3" th:field="*{codeineYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>9.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label>OTHER MEDICATIONS?(please list)</label>
+                <input type="text" name="otherMedicationList" th:field="*{otherMedicationList}" style='flex:1;'>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="otherMedication3" th:field="*{otherMedicationYN}" value = "yes">
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="otherMedication3" th:field="*{otherMedicationYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>10.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label> Allergies other than drug allergies? (Please list)</label>
+                <input type="text" name="allergyDrugList" th:field="*{allergyDrugList}" style='flex:1;'>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="allergyDrug3" th:field="*{allergyDrugYN}" value = "yes">
+            </div>
+            <div class='col-sm-1'>
+
+                <input type="radio" name="allergyDrug3" th:field="*{allergyDrugYN}" value = "no">
+            </div>
+        </div>
+    </div>
+
+    <div class="round container-fluid center">
+        <div class="text">
+            <h4>WOMEN:</h4>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>1.</label>
+            </div>
+            <div class="col-sm-9 flex-col">
+                <label>In weeks, how long ado was your last menstrual period?</label>
+                <div class='dotted-line'><div></div></div>
+            </div>
+            <div class="col-sm-2 flex-col">
+                <input type="text" name="period3" th:field="*{period}" style='width: 90px'>
+                <label>weeks</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1">
+                <label>2.</label>
+            </div>
+            <div class="col-sm-9 flex-col">
+                <label>Are you taking bith control pills?</label>
+                <div class='dotted-line'><div></div></div>
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="birthControl3" th:field="*{birthControlYN}" value = "yes">
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="birthControl3" th:field="*{birthControlYN}" value = "no">
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-1'>
+                <label>3.</label>
+            </div>
+            <div class='col-sm-9 flex-col'>
+                <label>Is there a possibility that you may ne pregnant?</label>
+                <div class='dotted-line'><div></div></div>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="pregnant3" th:field="*{pregnantYN}" value = "yes">
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="pregnant3" th:field="*{pregnantYN}" value = "no">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-1">
+                <label>4.</label>
+            </div>
+            <div class="col-sm-9 flex-col">
+                <label>If pregnant what is estimated delivery date?</label>
+                <input type="date" name="di=deliveryDate3" th:field="*{deliveryDate}" style='flex:1;'/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-1">
+                <label>5.</label>
+            </div>
+            <div class="col-sm-9 flex-col">
+                <label>Are you nursing?</label>
+                <div class='dotted-line'><div></div></div>
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="nursing3" th:field="*{nursingYN}" value = "yes">
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="nursing3" th:field="*{nursingYN}" value = "no">
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-sm-2'>
+                <label style='text-decoration: underline;'>WOMEN NOTE:</label>
+            </div>
+            <div class='col-sm-8' style='text-align: left;padding:0;'>
+                <p>Antibiotics (such as penicillin) may be alter the effectiveness of birth control pills.Consult your physician / gynecologist for assistance regarding additional methods of birth control.</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="round container-fluid center">
+        <div class="row">
+            <div class="col-sm-10 flex-col">
+                <label>IS THERE ANY OTHER CONDITION CONCERNING YOUR HEALTH THAT THE DOCTOR SHOULD BE TOLD?</label>
+                <div class='dotted-line'><div></div></div>
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="otherCondition3" th:field="*{otherConditionYN}" value = "yes">
+                <label>Yes</label>
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="otherCondition3" th:field="*{otherConditionYN}" value = "no">
+                <label>No</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 flex-col">
+                <label>Is there a family history of</label>
+                <div class='dotted-line'><div></div></div>
+            </div>
+            <div class="col-sm-2 flex-col">
+                <label>Cancer?</label>
+                <div class='dotted-line'><div></div></div>
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="cancer3" th:field="*{cancerYN}" value = "yes">
+                <label>Yes</label>
+            </div>
+            <div class="col-sm-1">
+
+                <input type="radio" name="cancer3" th:field="*{cancerYN}" value = "no">
+                <label>No</label>
+            </div>
+            <div class="col-sm-3 flex-col">
+                <label>Diabetes</label>
+                <div class='dotted-line'><div></div></div>
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="diabetes3" th:field="*{diabetesYN}" value = "yes">
+                <label>Yes</label>
+            </div>
+            <div class="col-sm-1">
+                <input type="radio" name="diabetes3" th:field="*{diabetesYN}" value = "no">
+                <label>No</label>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-sm-2 col-sm-offset-3 flex-col'>
+                <label>Heart Disease</label><div class='dotted-line'><div></div></div>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="heartDisease3" th:field="*{heartDiseaseYN}" value = "yes">
+                <label>Yes</label>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="heartDisease3" th:field="*{heartDiseaseYN}" value = "no">
+                <label>No</label>
+            </div>
+            <div class='col-sm-3 flex-col'>
+                <label>Anesthetic Problems</label>
+                <div class='dotted-line'><div></div></div>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="anestheticProblem3" th:field="*{anestheticProblemYN}" value = "yes">
+                <label>Yes</label>
+            </div>
+            <div class='col-sm-1'>
+                <input type="radio" name="anestheticProblem3" th:field="*{anestheticProblemYN}" value = "no">
+                <label>No</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="round container-fluid center">
+        <div class="row">
+            <div class='col-sm-12' style="text-align:left;">
+                <p>I certify that I hace read and understand the questions above, and have answered them honestly. I acknowledge that my questions, if any, about the inquiries set forth above have been answered to my satisfaction. I will not hold my surgeon, or any other member of his staff, responsible for any errors or omissions that I have made or consequences resulting from such errors or omissions, in the completion of this form.</p>
+            </div>
+        </div>
+        <div class="flex-row">
+            <label>Signature of patient:</label>
+            <input type="text" name="signature3_1" th:field="*{signature3_1}" placeholder="(Parent or Guardian if monir)">
+            <label>Date:</label>
+            <input type="date" name="date3_1" th:field="*{date3_1}">
+            <label>Reviewed by</label>
+            <input type="text" name="reviewedBy3" th:field="*{reviewedBy3}">
+        </div>
+
+    </div>
+    <div class="title">
+        <h4>-CONSENT FOR TREATMENT AND ANESTHESIA-</h4>
+    </div>
+    <div class="round container-fluid center" style='border: none'>
+        <div class='row'>
+            <p>
+                The consent and the nature of the treatment have been fully explained to me. I have been fully informed of,
+                and understand fully, all the risks to me that are involved in the performance of the treatment to be rendered.
+                I understand that there is a possibility of complications developing during or after treatment and these have been fully explained to me.
+                I am now giving my free and voluntary informed consent for the treatment to be rendered. I have not been given or
+                received any guarantee as to the results to be obtained from the treatment I am to received. I have been
+                told that there will be anesthesia administered and the type and nature of such anesthesia, as well as any risks involved in such
+                administration and of the anesthesia itself, have been fully explained to me, and I do give my free and voluntary
+                informed consent to same.</p>
+            <p>
+                I have been informed and understand that some possible complications are plain, infection, swlling, bleeding, bruising,
+                discoloration, temporary or permanent numbness and tingling of the lip, chin, tongue, gums, cheek or teeth, nausea,
+                vomiting, allergic reaction, change in occlusion, temporo-mandibular joint (jaw joint) difficulty (problems with opening and closing jaws),
+                trismus (difficulty with opening mouth), injury to adjacent teeth and restorations, cracking and bruising of the lips and corners of the mouth, fractures
+                of the jaw, delayed healing, pain, numbness or inflammation of the vein (thrombophlebitis) from intravenous injection, and unfavorable reactions
+                to drugs and anesthetics. I understand that the removal of ipper teeth may result in sinus complications,
+                (an opening or hole in the sinus) which may necessitate further surgery at a later date. I also understand
+                that unforseen complications can occur.</p>
+            <p>
+                Such alternate treatment methods to the proposed procedure as are available to treat my disorder, including no
+                treatment were fully described to me prior to the performance of surgery. Today's surgical procedure,
+                which has been explained to me in advance is.
+            </p>
+            <br>
+            <br>
+            <p>
+                <b>Note:</b>
+                You may have nothing to eat or drink for eight hours before a general anesthetic or IV sedation. You must not
+                drive a car or operate hazardous machinery for at least 24 hours after a general anesthetic or IV sedation.
+                Someone responsible must take you home and stay with you for 12-24 hours adter a general anesthetic or IV
+                sedation. You must not use alcohol or take any medications or drugs (other than those prescribed) without
+                first consulting the treating doctor.
+            </p>
+        </div>
+        <div class="flex-row">
+            <label>Date:</label>
+            <input type="date" name="date3_2" th:field="*{date3_2}">
+            <label>Signature of Patient</label>
+            <input type="text" placeholder="(Parent or Guardian if monir)" name="signature3_2" th:field="*{signature3_2}">
+        </div>
+        <div class="flex-row">
+            <label>Witness:</label>
+            <input type="text" name="witness3" th:field="*{witness}">
+            <label>Operating Doctor:</label>
+            <input type="text" name="operatingDoctor3" th:field="*{operatingDoctor}">
+        </div>
+
+    </div>
+
+    <!-- Page4 -->
+    <div class="round">
+        <div class="text">
+            <h4>PRIOR OPERATIONS AND HOSPITALIZATIONS</h4>
+            <textarea name="operation4" id="operation4" th:field="*{operation4}" ></textarea>
+        </div>
+    </div>
+    <div class='container-fluid'>
+        <div class='flex-row' style=';display:block;margin: 0 10px'>
+            <input style="float:right;" type="submit" value="Submit" class='btn btn-sm btn-primary'/>
+            <input style="float:left;" type="reset" value="Reset" class='btn btn-sm btn-success'/>
+        </div>
+    </div>
+    <br>
+</form>
+<script type="text/babel">
+</script>
+</body>
+</html>

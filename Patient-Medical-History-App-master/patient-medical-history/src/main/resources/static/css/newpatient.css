@@ -1,0 +1,175 @@
+body {
+    width: 100%;
+    border: none;
+    margin: none;
+    padding: none;
+}
+.title {
+    text-align: center;
+    font-weight: bold;
+}
+
+table.round-table {
+    margin: 25px;
+    font-stretch: expanded;
+    width: auto;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 6px;
+    border-collapse: separate;
+}
+
+.round {
+    border-radius: 10px;
+    border: 2px solid black;
+    margin: 25px;
+}
+
+.text{
+    margin:0 20px;
+    font-stretch: expanded;
+}
+#operation4,
+.textbox-lines {
+    width: 100%;
+    max-width: 100%;
+    font-size: 14px;
+    border: none;
+    background-attachment: local;
+    background-image:
+            linear-gradient(to right, #FFFFFF, #FFFFFF 10px, transparent 10px),
+            linear-gradient(to left, #FFFFFF, #FFFFFF 10px, transparent 10px),
+            repeating-linear-gradient(
+                    #FFFFFF,
+                    #FFFFFF 29px,
+                    #CCCCCC 29px,
+                    #CCCCCC 30px
+            );
+    line-height: 30px;
+    padding: 0px 10px;
+    resize: none;
+}
+.text textarea {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    min-width: 600px;
+    resize: none;
+    border: none;
+}
+.text textarea:focus {
+    outline: none;
+}
+hr {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+span {
+    text-align: center;
+    margin: 40px;
+}
+
+.flex-row{
+    display:flex;
+    margin: 10px 0;
+}
+.flex-row label,
+.center label {
+    margin:0 10px;
+}
+.flex-row input[type="text"],
+.flex-row input[type="number"],
+.flex-row textarea {
+    width: 100%;
+    flex:1;
+}
+
+.center input[type="text"],
+.center input[type="date"],
+.input-date,
+.flex-row input[type="text"],
+.flex-row input[type="date"],
+.flex-row input[type="number"],
+.flex-row textarea {
+    background: none;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid black;
+}
+.round-table input[type="text"]:focus,
+.center input[type="text"]:focus,
+.center input[type="date"]:focus,
+.flex-row input:focus {
+    outline: none;
+}
+.grey-header {
+    border-radius: 7px 7px 0 0;
+    width: calc(100% + 30px);
+    margin-left:-15px;
+    background:#CCCCCC ;
+    border-bottom:2px #000000 solid;
+}
+.grey-header label{
+    margin:0 25px;
+}
+div.center {
+    margin:0 25px -2px 25px;
+    padding-bottom: 5px;
+}
+
+div.center > div.row > .flex-col {
+    display: flex;
+}
+
+div.center > div.row > .flex-col > .dotted-line {
+    flex: 1;
+}
+
+div.center > div.row > .flex-col > .dotted-line div {
+    width: calc(100%);
+    height:15px;
+    border-bottom: 2px #000000 dotted;
+}
+div.center > div.row.header{
+    border-bottom: 2px #000000 solid;
+    background: #CCCCCC;
+    border-radius: 8px 8px 0 0;
+}
+
+div.center > div.row > div:first-child,
+div.center > div.row > div:nth-last-child(2),
+div.center > div.row > div:last-child {
+    text-align: center;
+}
+
+table.round-table > thead > tr > th,
+table.round-table > tbody > tr > th,
+table.round-table > tbody > tr > td {
+    padding:0 5px;
+    border: 1px solid #000000;
+    text-align: center;
+
+}
+table.round-table > tbody > tr > td {
+    text-align: left;
+}
+
+table.round-table > thead > tr > th {
+    background: #CCCCCC;
+}
+table.round-table > thead > tr > th:first-child {
+    border-radius: 5px 0 0 0;
+}
+table.round-table > tbody > tr:last-child > th:first-child {
+    border-radius:  0 0 0 5px;
+}
+table.round-table > thead > tr > th:last-child {
+    border-radius: 0 5px 0 0;
+}
+table.round-table > tbody > tr:last-child > th:last-child {
+    border-radius: 0 0 5px 0;
+}

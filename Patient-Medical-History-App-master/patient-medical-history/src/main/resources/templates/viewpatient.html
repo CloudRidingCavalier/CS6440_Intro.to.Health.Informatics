@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>View Patient</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<style>
+		table.table
+		{
+			margin-top: 10px;
+		}
+		table.table > thead > tr > th{
+			background: #286090;
+			color:#ffffff;
+		}
+		.search label {
+			color:#286090;
+		}
+	</style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Patient Medical History</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a href="/">Enter Patient Data</a></li>
+			<li class="active"><a href="#">View Patient Data</a></li>
+		</ul>
+	</div>
+</nav>
+
+
+<div class='container-fluid search '>
+	<div class='row'>
+		<div class='col-sm-2'>
+			<form action="#" th:action="@{/findbyssn1}" th:object="${webFormData}" method="post">
+				<label >SSN:</label>
+				<input type="form-control" name="ssn" th:field="*{ssn}" required>
+				<input class='btn btn-xs btn-primary' type="submit" value="Find" />
+
+			</form>
+		</div>
+		<div class='col-sm-2'>
+			<form action="#" th:action="@{/findbyfirstname}" th:object="${webFormData}" method="post">
+				<label >First Name:</label>
+				<input type="form-control" name="firstName" th:field="*{firstName}"required>
+				<input class='btn btn-xs btn-primary' type="submit" value="Find" />
+			</form>
+		</div>
+		<div class='col-sm-2'>
+			<form action="#" th:action="@{/findbylastname}" th:object="${webFormData}" method="post">
+				<label>Last Name:</label>
+				<input type="form-control" name="lastName" th:field="*{lastName}" required>
+				<input class='btn btn-xs btn-primary' type="submit" value="Find" />
+			</form>
+		</div>
+		<div class='col-sm-2'>
+			<form action="#" th:action="@{/findbydateofbirth}" th:object="${webFormData}" method="post">
+				<label>Date of Birth</label>
+				<input type="date" name="dataOfBirth" th:field="*{dataOfBirth}" placeholder="yyyy-mm-dd" required>
+				<input class='btn btn-xs btn-primary' type="submit" value="Find" />
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<table class='table table-striped table-hover'>
+
+	<thead th:if="${not #lists.isEmpty(data)}">
+	<tr>
+		<th>SSN</th>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<th>Date of Birth</th>
+		<th>Detail</th>
+	</tr>
+	</thead>
+	<tbody >
+	<!-- 			<tr>
+                    <td>1</td>
+                    <td>Nan</td>
+                    <td>Li</td>
+                    <td><input type="submit" value="View" class='btn btn-xs btn-primary'/></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Nan</td>
+                    <td>Li</td>
+                    <td><input type="submit" value="View" class='btn btn-xs btn-primary'/></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Nan</td>
+                    <td>Li</td>
+                    <td><input type="submit" value="View" class='btn btn-xs btn-primary'/></td>
+                </tr> -->
+	<tr th:each="patient: ${data}">
+		<td th:text="${patient.getSsn()}" />
+		<td th:text="${patient.getFirstName()}" />
+		<td th:text="${patient.getLastName()}" />
+		<td th:text="${patient.getDataOfBirth()}" />
+		<td><form action="#" th:action="@{/viewpatient}" th:object="${webFormData}" method="post">
+
+			<input type="form-control" name="ssn" th:value="${patient.getSsn()}" style="display: none"><input class='btn btn-xs btn-primary' type="submit" value="View" />
+
+		</form></td>
+	</tr>
+	</tbody>
+</table>
+
+
+
+
+
+</body>
+
+</html>

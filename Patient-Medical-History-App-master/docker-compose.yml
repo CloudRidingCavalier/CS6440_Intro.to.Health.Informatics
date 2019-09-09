@@ -1,0 +1,23 @@
+version: "3"
+services:
+  mysql-docker-container:
+    build: 
+       context: ./pmh-mysql
+       dockerfile: Dockerfile
+    volumes:
+      - /data/mysql
+    ports:
+      - 3306:3306
+
+  patientmedicalhistory:
+    image: patientmedicalhistory
+    build:
+      context: ./patient-medical-history
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql-docker-container
+    ports:
+      - 8087:8080
+    volumes:
+      - /data/spring-boot-app
+
